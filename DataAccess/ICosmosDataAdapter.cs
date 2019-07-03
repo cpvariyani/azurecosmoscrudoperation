@@ -17,5 +17,6 @@ namespace Cosmos_CRUD.DataAccess
         Task<bool> PlaceOrder(string dbName, string name, Order order);
 
         Task<dynamic> GetData(string dbName, string name);
+         Task<UserInfo> DeleteUserAsync(string dbName, string name, string id);
     }
 }

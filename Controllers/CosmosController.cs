@@ -72,8 +72,10 @@ namespace Cosmos_CRUD.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            var result = await _adapter.DeleteUserAsync("test-db", "test-collection", id);
+            return Ok(result);
         }
     }
 }

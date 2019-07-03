@@ -4,6 +4,7 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -115,5 +116,27 @@ namespace Cosmos_CRUD.DataAccess
 
             return (dynamic)response.Resource;
         }
+
+        public async Task<UserInfo> DeleteUserAsync(string dbName, string name, string id)
+        {
+            try
+            {
+                var collectionUri = UriFactory.CreateDocumentUri(dbName, name, id);
+
+                var result = await _client.DeleteDocumentAsync(collectionUri);
+
+                return (dynamic)result.Resource;
+            }
+            catch (DocumentClientException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+      
     }
 }
